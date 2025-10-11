@@ -2,11 +2,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:rick_and_morty_app/character/character_page.dart';
+import 'package:rick_and_morty_app/episode/episode_page.dart';
+import 'package:rick_and_morty_app/location/locations_page.dart';
+import 'package:rick_and_morty_app/main_page.dart';
 
+import 'favorite/favorites_page.dart';
 import 'model/bottom_nav_bar_item_model.dart';
 
-class MainScreen extends StatelessWidget {
-  List<dynamic> bottomBarItem = [];
+class MainScreen extends StatefulWidget {
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+    final List<BottomNavbarItemModel> _navBarItem = [
+      BottomNavbarItemModel("assets/space_ship_selected_icon.svg","assets/space_ship_default_icon.svg","Main Page"),
+      BottomNavbarItemModel("assets/character_selected_icon.svg","assets/character_default_icon.svg","Character"),
+      BottomNavbarItemModel("assets/episode_selected_icon.svg","assets/episode_default_icon.svg","Episode"),
+      BottomNavbarItemModel("assets/location_selected_icon.svg","assets/location_default_icon.svg","Location"),
+      BottomNavbarItemModel("assets/favorite_selected_icon.svg","assets/favorite_default_icon.svg","Favorites")
+    ];
+
+    int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +34,7 @@ class MainScreen extends StatelessWidget {
       bottomNavigationBar: _buildBottomBar(),
     );
   }
+
   Widget _buildBody(){
     return SafeArea(
       top: true,
@@ -23,44 +42,15 @@ class MainScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          _buildTopBar(),
-          //_buildBottomNavBar()
+          Expanded(child: _buildScreen())
+
         ],
       ),
     );
   }
 
-  Widget _buildTopBar(){
 
-    return Container(
-       height: 160,
-       decoration: BoxDecoration(
-       image: DecorationImage(image: AssetImage("assets/app_top_bar_image.png"),
-       fit: BoxFit.cover),
-       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16,right: 16, top:18),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset("assets/character_icon_image.png",
-                width: 32,
-                height: 34,),
-
-                Image.asset("assets/search_icon.png",
-                  width: 32,
-                  height: 34,)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
+  //Widget Function
   Widget _buildBottomBar(){
        return Container(
          width: double.infinity,
@@ -72,57 +62,73 @@ class MainScreen extends StatelessWidget {
              topRight: Radius.circular(16)
            )
          ),
-         child: Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: [
+         child: Padding(
+           padding: const EdgeInsets.only(left: 16,right: 16,top: 4,bottom: 4),
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: List.generate(_navBarItem.length, (index){
+               final item = _navBarItem[index];
+               final isSelected = index == selectedIndex;
 
-
-
-           ],
+               return GestureDetector(
+                 onTap: (){
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                 },
+                 child: _buildBottomNavBarItem(item,isSelected)
+               );
+             }).toList(),
+           ),
          ),
        );
   }
-
   Widget _buildBottomNavBarItem(BottomNavbarItemModel item, bool selected){
 
-    String icon;
+    String icon = selected ? item.selectIcon : item.defaultIcon;
+    Color color;
+    double iconSize;
+    double fontSize;
 
-    if(selected){
-      icon = item.selectIcon;
+    if(icon == item.selectIcon){
+       color = Colors.white;
+       iconSize = 32;
+       fontSize = 12;
     }
     else{
-      icon = item.defaultIcon;
+       color = Color(0xFF008B9F);
+       iconSize = 26;
+       fontSize = 10;
     }
 
     return Column(
       children: [
-        SvgPicture.asset("$icon}"),
-        Text("${item.label}")
+        SvgPicture.asset("$icon",
+        width:iconSize,
+        height: iconSize,),
+        SizedBox(height: 4,),
+        Text("${item.label}",
+        style: TextStyle(
+          color: color,
+           fontSize: fontSize,
+           fontWeight: FontWeight.bold
+         ),
+        )
       ],
     );
   }
+  Widget _buildScreen() {
+
+    List<Widget> screenList = [MainPage(),CharacterPage(),EpisodePage(),LocationsPage(),FavoritesPage()];
+
+    Widget selectedWidget = screenList[selectedIndex];
+
+    return selectedWidget;
+  }
+
+
 
 }
 
 
-/*
 
-BottomNavigationBar(items: [
-        BottomNavigationBarItem(icon: SvgPicture.asset("assets/character_default_icon.svg",
-          width: 28,
-          height: 28),
-            label: 'Character'),
-        BottomNavigationBarItem(icon: SvgPicture.asset("assets/episode_default_icon.svg",
-          width: 28,
-          height: 28)
-            , label: 'Location'),
-        BottomNavigationBarItem(icon: SvgPicture.asset("assets/location_default_icon.svg",
-          width: 28,
-          height: 28),
-            label: 'Episode'),
-        BottomNavigationBarItem(icon: SvgPicture.asset("assets/favorite_default_icon.svg",
-          width: 28,
-          height: 28)
-            , label: 'Favorites')
-      ],
- */
