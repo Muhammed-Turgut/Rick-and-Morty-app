@@ -35,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
+    //Widget Function
   Widget _buildBody(){
     return SafeArea(
       top: true,
@@ -48,9 +49,6 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
-
-  //Widget Function
   Widget _buildBottomBar(){
        return Container(
          width: double.infinity,
@@ -121,10 +119,14 @@ class _MainScreenState extends State<MainScreen> {
 
     List<Widget> screenList = [MainPage(),CharacterPage(),EpisodePage(),LocationsPage(),FavoritesPage()];
 
+
+
     Widget selectedWidget = screenList[selectedIndex];
 
     return selectedWidget;
   }
+
+
 
 
 
