@@ -6,8 +6,8 @@ class Episode {
   List<String> characters; // 🔹 Burayı List<String> yapıyoruz
   String url;
 
-  Episode.fromMap(Map<String,dynamic> episodeMap)
-      : id = episodeMap["id"] ?? 0,
+  Episode.fromMap(Map<String,dynamic> episodeMap):
+        id = episodeMap["id"] ?? 0,
         name = episodeMap["name"] ?? "",
         air_date = episodeMap["air_date"] ?? "",
         episode = episodeMap["episode"] ?? "",

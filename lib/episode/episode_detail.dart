@@ -488,7 +488,7 @@ class _EpisodeDetailState extends State<EpisodeDetail> {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        _routePage(MainScreen());
+                        _routePage(MainScreen(2));
                       },
                       child: SvgPicture.asset(
                         "assets/back_arrow_icon.svg",

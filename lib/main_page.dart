@@ -335,6 +335,7 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
@@ -350,6 +351,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -396,6 +398,7 @@ class _MainPageState extends State<MainPage> {
       debugPrint("Veri alınamadı: ${response.statusCode}");
     }
   }
+
   void _allCharacterInternet() async{
   Uri uri = Uri.parse(_CHARACTER_API_URL);
   http.Response response = await http.get(uri);

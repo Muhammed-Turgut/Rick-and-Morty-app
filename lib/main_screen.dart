@@ -15,6 +15,11 @@ import 'favorite/favorites_page.dart';
 import 'model/bottom_nav_bar_item_model.dart';
 
 class MainScreen extends StatefulWidget {
+
+  int _getPage;
+
+  MainScreen(this._getPage);
+
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -33,7 +38,8 @@ class _MainScreenState extends State<MainScreen> {
     List<Episode> _allEpisode = [];
 
 
-    int selectedIndex = 0;
+    late int selectedIndex = widget._getPage;
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,9 +133,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget _buildScreen() {
 
     List<Widget> screenList = [MainPage(),CharacterPage(),EpisodePage(),LocationsPage(),FavoritesPage()];
-
-
-
     Widget selectedWidget = screenList[selectedIndex];
 
     return selectedWidget;

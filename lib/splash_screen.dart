@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     MaterialPageRoute pageRoute = MaterialPageRoute(builder: (context){
 
-      return MainScreen();
+      return MainScreen(0);
 
     });
 
