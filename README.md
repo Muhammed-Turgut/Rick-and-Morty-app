@@ -14,10 +14,10 @@
 
 ---
 
-<h2 align = "start">Uygulama Hakkında</h1>
+<h2 align = "start">About App</h1>
 <h3 align = "start">
-  Bu uygulama Dart dilinde Flutter framworkü kullanılarak geliştirildi. Uygulamada Rick and morty public API kullanıldı. İnternet işlemleri için http kütüphanesi kullanıldı.
-  Uygulamada Diziyi sevenler için karakterler bölümler ve lokasyonlar var  kullanıcı merek ettiği yerlere kolaylıkla bakabiliyor.
+This application can be easily implemented in Dart using the Flutter framework. The application records the Rick and Morty public API. HTTP backups are recorded for internet transactions.
+The application includes characters, episodes, and locations for fans of the series. Users can host content hosted by Merek.
 </h3>
 
 ---
