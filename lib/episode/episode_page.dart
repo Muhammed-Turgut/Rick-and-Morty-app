@@ -53,6 +53,7 @@ class _EpisodePageState extends State<EpisodePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           _buildTopBar(),

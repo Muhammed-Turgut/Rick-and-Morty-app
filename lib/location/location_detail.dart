@@ -48,7 +48,10 @@ class _LocationDetailState extends State<LocationDetail> {
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
+    return SafeArea(
+        top: true,
+        bottom: false,
+        child:SingleChildScrollView(
       child: Column(
         children: [
           _buildTopBar(),
@@ -57,6 +60,7 @@ class _LocationDetailState extends State<LocationDetail> {
           _buildMoreLocation(),
         ],
       ),
+    )
     );
   }
 
@@ -78,7 +82,7 @@ class _LocationDetailState extends State<LocationDetail> {
             ),
 
             Padding(
-              padding: const EdgeInsets.only(left: 16,right: 16,top: 24),
+              padding: const EdgeInsets.only(left: 16,right: 16,top: 16),
               child: Column(children: [
                 GestureDetector(
                   onTap: (){

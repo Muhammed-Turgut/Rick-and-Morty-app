@@ -75,22 +75,27 @@ class _EpisodeDetailState extends State<EpisodeDetail> {
 
 
 
-    return Column(
+    return SafeArea(
+        top: true,
+        bottom: false,
+        child:Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildTopField(widget._episode,widget._index),
-        SizedBox(height: 24,),
+        SizedBox(height: 16,),
         _buildCharactersField(),
         _buildSeasonsField(context),
+        SizedBox(height: 8,),
         _buildEpisodeListField(context)
       ],
+     )
     );
 
   }
 
   Widget _buildSeasonsField(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16, left: 16, top: 16),
+      padding: const EdgeInsets.only(right: 16, left: 16, top: 4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -482,7 +487,7 @@ class _EpisodeDetailState extends State<EpisodeDetail> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 32.0),
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 16.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -528,7 +533,7 @@ class _EpisodeDetailState extends State<EpisodeDetail> {
                       Text(
                         episode.name,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF00B0C9),
                           fontFamily: 'Almarai',
@@ -640,6 +645,7 @@ class _EpisodeDetailState extends State<EpisodeDetail> {
     );
   }
   void _allCharacterInternet() async{
+
     Uri uri = Uri.parse(_CHARACTER_API_URL);
     http.Response response = await http.get(uri);
 
