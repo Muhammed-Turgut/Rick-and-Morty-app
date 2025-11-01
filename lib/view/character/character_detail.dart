@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rick_and_morty_app/main_screen.dart';
 
-import 'characters.dart';
+import '../../model/characters.dart';
+
 
 class CharacterDetail extends StatefulWidget {
 

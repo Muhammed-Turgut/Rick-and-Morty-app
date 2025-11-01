@@ -2,7 +2,10 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/main_screen.dart';
+
+import '../view_model/main_screen_view_model.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,6 +14,8 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
+
+
   @override
   void initState() {
     super.initState();
@@ -21,7 +26,10 @@ class _SplashScreenState extends State<SplashScreen>
     // Navigate to MainScreen after 3 seconds
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => MainScreen(0)),
+        MaterialPageRoute(builder: (_) => ChangeNotifierProvider(
+          create: (BuildContext create) => MainScreenViewModel(),
+          child: MainScreen(0),
+        )),
       );
     });
   }

@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:rick_and_morty_app/episode/episode.dart';
-import 'package:rick_and_morty_app/character/characters.dart';
+import 'package:rick_and_morty_app/model/episode.dart';
+import 'package:rick_and_morty_app/model/characters.dart';
 
 class MainPage extends StatefulWidget {
 

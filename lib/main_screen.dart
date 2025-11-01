@@ -1,17 +1,12 @@
 
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
-import 'package:rick_and_morty_app/character/character_page.dart';
-import 'package:rick_and_morty_app/episode/episode_page.dart';
-import 'package:rick_and_morty_app/location/locations_page.dart';
-import 'package:rick_and_morty_app/main_page.dart';
-
-import 'episode/episode.dart';
-import 'favorite/favorites_page.dart';
+import 'package:rick_and_morty_app/view/main_page.dart';
+import 'package:rick_and_morty_app/view/character/character_page.dart';
+import 'package:rick_and_morty_app/view/episode/episode_page.dart';
+import 'package:rick_and_morty_app/view/favorite/favorites_page.dart';
+import 'package:rick_and_morty_app/view/location/locations_page.dart';
 import 'model/bottom_nav_bar_item_model.dart';
 
 class MainScreen extends StatefulWidget {
@@ -34,8 +29,6 @@ class _MainScreenState extends State<MainScreen> {
       BottomNavbarItemModel("assets/location_selected_icon.svg","assets/location_default_icon.svg","Location"),
       BottomNavbarItemModel("assets/favorite_selected_icon.svg","assets/favorite_default_icon.svg","Favorites")
     ];
-
-    List<Episode> _allEpisode = [];
 
 
     late int selectedIndex = widget._getPage;
@@ -132,7 +125,17 @@ class _MainScreenState extends State<MainScreen> {
   }
   Widget _buildScreen() {
 
-    List<Widget> screenList = [MainPage(),CharacterPage(),EpisodePage(),LocationsPage(),FavoritesPage()];
+    List<Widget> screenList = [
+      MainPage(),
+
+      CharacterPage(),
+
+      EpisodePage(),
+
+      LocationsPage(),
+
+      FavoritesPage()];
+
     Widget selectedWidget = screenList[selectedIndex];
 
     return selectedWidget;

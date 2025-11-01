@@ -1,7 +1,8 @@
 
-import 'package:rick_and_morty_app/episode/episode.dart';
+import 'package:flutter/cupertino.dart';
 
-class Characterss {
+
+class Characterss with ChangeNotifier{
   String name;
   String status;
   String species;

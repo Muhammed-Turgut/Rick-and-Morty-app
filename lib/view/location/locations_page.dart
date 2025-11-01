@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:rick_and_morty_app/location/location.dart';
+import 'package:rick_and_morty_app/model/location.dart';
 
 import 'location_detail.dart';
 
