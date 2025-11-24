@@ -1,12 +1,11 @@
 
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:rick_and_morty_app/data/model/characters.dart';
 
-import '../model/characters.dart';
 
 class CharacterViewModel  with ChangeNotifier{
 

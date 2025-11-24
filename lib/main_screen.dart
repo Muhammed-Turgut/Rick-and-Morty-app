@@ -1,13 +1,12 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rick_and_morty_app/view/main_page.dart';
+import 'package:rick_and_morty_app/view/main_page/main_page.dart';
 import 'package:rick_and_morty_app/view/character/character_page.dart';
 import 'package:rick_and_morty_app/view/episode/episode_page.dart';
 import 'package:rick_and_morty_app/view/favorite/favorites_page.dart';
 import 'package:rick_and_morty_app/view/location/locations_page.dart';
-import 'model/bottom_nav_bar_item_model.dart';
+import 'data/model/bottom_nav_bar_item_model.dart';
 
 class MainScreen extends StatefulWidget {
 

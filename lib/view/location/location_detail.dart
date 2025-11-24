@@ -1,26 +1,19 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:http/http.dart' as http;
-import 'package:rick_and_morty_app/model/location.dart';
+import 'package:provider/provider.dart';
+import 'package:rick_and_morty_app/data/model/location.dart';
 import 'package:rick_and_morty_app/main_screen.dart';
-import '../../model/characters.dart';
+import 'package:rick_and_morty_app/view_model/location_detail_view_model.dart';
 import 'locations_page.dart';
 
 
 class LocationDetail extends StatefulWidget {
+  Location location;
+  String imageUrl;
+  List<Location> _allLocation;
 
-   Location location;
-   String imageUrl;
-   List<Location> _allLocation;
-
-   LocationDetail(this.location,this.imageUrl,this._allLocation);
-
-   List<Characterss> _allCharacterss = [];
-
-
+  LocationDetail(this.location,this.imageUrl,this._allLocation);
 
   @override
   State<LocationDetail> createState() => _LocationDetailState();
@@ -30,11 +23,10 @@ class _LocationDetailState extends State<LocationDetail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_){
-
-       _allCharactersLocation(widget.location);
+      LocationDetailViewModel viewModel = Provider.of<LocationDetailViewModel>(context,listen: false);
+      viewModel.allCharactersLocation(widget.location);
 
      }
     );
@@ -42,11 +34,12 @@ class _LocationDetailState extends State<LocationDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
+
     return SafeArea(
         top: true,
         bottom: false,
@@ -64,7 +57,7 @@ class _LocationDetailState extends State<LocationDetail> {
   }
 
   Widget _buildTopBar() {
-
+    LocationDetailViewModel viewModel = Provider.of<LocationDetailViewModel>(context,listen: false);
     return SizedBox(
         height: 338,
         width: double.infinity,
@@ -85,7 +78,7 @@ class _LocationDetailState extends State<LocationDetail> {
               child: Column(children: [
                 GestureDetector(
                   onTap: (){
-                    _routePage(MainScreen(3));
+                    viewModel.routePage(MainScreen(3),context);
                   },
                   child: SvgPicture.asset("assets/back_arrow_icon.svg"),
                 )
@@ -193,12 +186,12 @@ class _LocationDetailState extends State<LocationDetail> {
 
           SizedBox(
                 height: 160, // 🔹 yüksekliği sabitle (en önemli adım!)
-                child: ListView.builder(
-                  itemCount: widget._allCharacterss.length,
+                child: Consumer<LocationDetailViewModel>(builder: (context,viewModel,child)=>ListView.builder(
+                  itemCount: viewModel.getAllCharacters.length,
                   scrollDirection: Axis.horizontal,
                   physics: const BouncingScrollPhysics(),
                   itemBuilder: _buildCharacterListItem ,
-                ),
+                ),)
               ),
 
         ],
@@ -206,8 +199,9 @@ class _LocationDetailState extends State<LocationDetail> {
     );
   }
   Widget _buildCharacterListItem(BuildContext context, int index) {
+    LocationDetailViewModel viewModel = Provider.of<LocationDetailViewModel>(context,listen: false);
 
-    final character = widget._allCharacterss[index];
+    final character = viewModel.getAllCharacters[index];
 
     return Padding(
       padding: const EdgeInsets.only(left: 4, right: 4),
@@ -226,15 +220,13 @@ class _LocationDetailState extends State<LocationDetail> {
           SizedBox(height: 8,),
 
           Text(character.name)
-
-
         ],
       ),
     );
 
   }
   Widget _buildMoreLocation() {
-
+    LocationDetailViewModel viewModel = Provider.of<LocationDetailViewModel>(context,listen: false);
     return Padding(
       padding: const EdgeInsets.only(left: 16,right: 16,top: 8),
       child: Column(
@@ -253,7 +245,7 @@ class _LocationDetailState extends State<LocationDetail> {
 
               GestureDetector(
                 onTap: (){
-                  _routePage(LocationsPage());
+                  viewModel.routePage(LocationsPage(),context);
                 },
                 child: Text("see all",
                 style: TextStyle(
@@ -269,7 +261,7 @@ class _LocationDetailState extends State<LocationDetail> {
           SizedBox(
             height: 180, // 🔹 yüksekliği sabitle (en önemli adım!)
             child: ListView.builder(
-              itemCount: widget._allCharacterss.length,
+              itemCount: viewModel.getAllCharacters.length,
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
               itemBuilder: _buildLocationListItem ,
@@ -281,75 +273,19 @@ class _LocationDetailState extends State<LocationDetail> {
 
   }
 
-  Future<void> _allCharactersLocation(Location location) async{
-
-    for(var residentsUrl in widget.location.residents){
-      final character = await _getLocationCharacter(residentsUrl, location);
-
-      if(character != null){
-
-        setState(() {
-
-          widget._allCharacterss.add(character);
-
-
-        });
-
-      }
-    }
-
-  }
-  Future<Characterss?> _getLocationCharacter(String url,Location location) async {
-
-    if(location.residents.isEmpty) return null;
-
-    Uri uri = Uri.parse(url);
-    http.Response response = await http.get(uri);
-
-
-   if(response.statusCode == 200){
-        final Map <String, dynamic> data  = jsonDecode(response.body);
-        return Characterss.fromMap(data);
-   }
-   else{
-     print("Eror: ${response.statusCode}");
-     return null;
-   }
-
-
-
-  }
-  void _routePage(Widget routWidget){
-
-    MaterialPageRoute pageRoute = MaterialPageRoute(builder: (context){
-
-      return routWidget;
-
-    }
-    );
-
-    Navigator.push(context, pageRoute);
-  }
-
-
-
-
-
 
 
   Widget _buildLocationListItem(BuildContext context, int index) {
+    LocationDetailViewModel viewModel = Provider.of<LocationDetailViewModel>(context,listen: false);
+
     Location location = widget._allLocation[index];
     String image = "https://ik.imagekit.io/eqxxgq5ve/${index+1}.png?updatedAt=1760875533841";
-
-
-
-
 
     return Padding(
       padding: const EdgeInsets.only(left: 4, right: 4),
       child: GestureDetector(
           onTap: (){
-            _routePage(LocationDetail(location,image,widget._allLocation));
+            viewModel.routePage(LocationDetail(location,image,widget._allLocation),context);
           },
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -384,7 +320,6 @@ class _LocationDetailState extends State<LocationDetail> {
                 ),
               ),
               SizedBox(height: 8,),
-
             ],
           )
       ),

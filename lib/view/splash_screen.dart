@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/main_screen.dart';
-
 import '../view_model/main_screen_view_model.dart';
 
 class SplashScreen extends StatefulWidget {

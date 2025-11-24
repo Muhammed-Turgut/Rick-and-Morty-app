@@ -1,26 +1,18 @@
-
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
-import 'package:rick_and_morty_app/model/episode.dart';
-
-import '../../main_screen.dart';
-import '../../model/characters.dart';
+import 'package:rick_and_morty_app/data/model/characters.dart';
+import 'package:rick_and_morty_app/data/model/episode.dart';
+import 'package:rick_and_morty_app/main_screen.dart';
 
 
 class EpisodeDetail extends StatefulWidget {
 
-
-
-
-
   Episode _episode;
-   int _index;
-
-   EpisodeDetail(this._episode,this._index);
+  int _index;
+  EpisodeDetail(this._episode,this._index);
 
   @override
   State<EpisodeDetail> createState() => _EpisodeDetailState();
