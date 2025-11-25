@@ -36,6 +36,10 @@ class EpisodeViewModel with ChangeNotifier{
 
   List<Episode> selectedList = [];
 
+
+
+
+
   void allEpisodeInternet() async {
     Uri uri = Uri.parse(_EPISODE_API_URL);
     http.Response response = await http.get(uri);
@@ -207,4 +211,6 @@ class EpisodeViewModel with ChangeNotifier{
 
     Navigator.push(context, pageRoute);
   }
+
+
 }

@@ -1,28 +1,25 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:rick_and_morty_app/data/model/characters.dart';
 import 'package:rick_and_morty_app/main_screen.dart';
+import 'package:rick_and_morty_app/view_model/character_detail_view_model.dart';
 
 
-class CharacterDetail extends StatefulWidget {
+class CharacterDetail extends StatelessWidget {
 
   Characterss characterss;
   CharacterDetail(this.characterss);
 
   @override
-  State<CharacterDetail> createState() => _CharacterDetailState();
-}
-
-class _CharacterDetailState extends State<CharacterDetail> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: _buildBody(),);
+      body: _buildBody(context),);
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
 
     return SafeArea(
         top: true,
@@ -32,7 +29,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
       color: Color(0xff80c141),
       child: Column(
         children: [
-          _buildTopBar(),
+          _buildTopBar(context),
           _buildImageField(),
           SizedBox(height: 24,),
           _buildAboutCharacter()
@@ -43,7 +40,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
 
   }
 
-  Widget _buildTopBar() {
+  Widget _buildTopBar(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only( left: 16.0, right: 16,top: 16),
       child: Row(
@@ -51,7 +48,11 @@ class _CharacterDetailState extends State<CharacterDetail> {
          children: [
            GestureDetector(
              onTap: (){
-               _routePage(MainScreen(1));
+
+               CharacterDetailViewModel viewModel = Provider.of<CharacterDetailViewModel>(context,listen: false);
+               print("Tıklandı");
+               viewModel.routePage(MainScreen(1),context);
+
              },
                child:
            SvgPicture.asset("assets/back_arrow_icon.svg",width: 32,height: 32) ),
@@ -66,7 +67,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("${widget.characterss.name}",
+        Text("${characterss.name}",
         style: TextStyle(
           fontSize: 42,
           fontFamily: 'GtPro',
@@ -76,7 +77,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
         ),
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(16)),
-          child: Image.network(widget.characterss.image,
+          child: Image.network(characterss.image,
           width: 232,
           height: 280,
           fit: BoxFit.cover,),
@@ -87,7 +88,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
   }
 
   Widget  _buildAboutCharacter() {
-    
+
     return Expanded(
       child: Container(
         width: double.infinity,
@@ -123,7 +124,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
         ),
       ),
     );
-    
+
   }
 
   Widget _buildAboutList() {
@@ -139,7 +140,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
             ),
 
-            Text(widget.characterss.name,style: TextStyle(
+            Text(characterss.name,style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -157,7 +158,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
             ),
 
-            Text(widget.characterss.status,style: TextStyle(
+            Text(characterss.status,style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -175,7 +176,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
             ),
 
-            Text(widget.characterss.species,style: TextStyle(
+            Text(characterss.species,style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -193,7 +194,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
             ),
 
-            Text(widget.characterss.type,style: TextStyle(
+            Text(characterss.type,style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -211,7 +212,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
             ),
 
-            Text(widget.characterss.gender,style: TextStyle(
+            Text(characterss.gender,style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white
@@ -231,7 +232,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
 
 
             Expanded(
-              child: Text(widget.characterss.originName,
+              child: Text(characterss.originName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -254,7 +255,7 @@ class _CharacterDetailState extends State<CharacterDetail> {
             ),
 
             Expanded(
-              child: Text(widget.characterss.locationName,
+              child: Text(characterss.locationName,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -268,17 +269,5 @@ class _CharacterDetailState extends State<CharacterDetail> {
         ),
       ],
     );
-  }
-
-  void _routePage(Widget routWidget){
-
-    MaterialPageRoute pageRoute = MaterialPageRoute(builder: (context){
-
-      return routWidget;
-
-    }
-    );
-
-    Navigator.push(context, pageRoute);
   }
 }
